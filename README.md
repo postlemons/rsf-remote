@@ -1,8 +1,3 @@
-Let's start by generating a README file for your project. Based on the information provided, here's a suggested structure for your README file:
-
-### README.md
-
-```markdown
 # RSF Remote
 
 RSF Remote is a remote filtering software for Excel sheets.
@@ -40,11 +35,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Contact
 
 For any inquiries or issues, please contact [postlemons](https://github.com/postlemons).
-```
+
 
 ### LICENSE
-
-For the license, here's an example of an MIT License file:
 
 ```plaintext
 MIT License
@@ -69,5 +62,3 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
-
-You can add these files to your repository by creating `README.md` and `LICENSE` files with the respective content.
