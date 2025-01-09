@@ -1,1 +1,1 @@
-> pip install Flask pandas google-auth google-auth-oauthlib google-auth-httplib2 google-api-python-client
+> pip install Flask XlsxWriter pandas openpyxl gspread google-auth oauth2client google

@@ -1,13 +1,24 @@
 document.addEventListener('DOMContentLoaded', function() {
     const addSheetBtn = document.getElementById('add-sheet-btn');
     const sheetsContainer = document.getElementById('sheets-container');
-    const LoadingSpinner = document.getElementById('loading-spinner');
-    setTimeout(() => {
-        LoadingSpinner.remove();
-    }, 2000);
-  
+    const loadingSpinner = document.getElementById('loading-spinner');
+    const uploadForm = document.getElementById('upload-form');
+    const submitBtn = uploadForm ? uploadForm.querySelector('button[type="submit"]') : null;
+    setTimeout(() => loadingSpinner.hidden = true, 1000); // Hide the spinner initially
+    // Show spinner and disable submit button on form submission
+    if (uploadForm) {
+        uploadForm.addEventListener('submit', function(event) {
+            if (loadingSpinner) {
+                loadingSpinner.hidden = false; // Show the spinner
+            }
+            if (submitBtn) {
+                submitBtn.disabled = true; // Disable the submit button to prevent multiple submissions
+            }
+        });
+    }
+
     // Add new sheet input
-    if (addSheetBtn) {
+    if (addSheetBtn && sheetsContainer) {
         addSheetBtn.addEventListener('click', function() {
             const sheetInputGroup = document.createElement('div');
             sheetInputGroup.classList.add('input-group', 'mb-2', 'sheet-input');
