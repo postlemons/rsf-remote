@@ -59,6 +59,13 @@ def local_file_to_df(local_file_path):
     Converts a local Excel file to a pandas DataFrame.
     """
     try:
+       
+        # Read the Excel file with date inference
+        df = pd.read_excel(local_file_path)
+        # Attempt to convert all object columns to datetime
+        for col in df.select_dtypes(include=['object']).columns:
+            df[col] = pd.to_datetime(df[col], errors='ignore', infer_datetime_format=True)
+        
         df = pd.read_excel(local_file_path)
         print("Local DataFrame loaded successfully.")
         return df
@@ -98,4 +105,31 @@ def filter_and_remove_matches(df_online_list, df_local, column_name):
     print(df_local_filtered)
 
     return df_local_filtered
+
+def save_df_to_excel(df, file_path):
+    """
+    Saves the DataFrame to an Excel file, preserving date formats without specifying date columns.
+    """
+    try:
+        with pd.ExcelWriter(file_path, engine='xlsxwriter', datetime_format='mm/dd/yyyy') as writer:
+            df.to_excel(writer, index=False, sheet_name='Sheet1')
+            workbook  = writer.book
+            worksheet = writer.sheets['Sheet1']
+            
+            # Automatically detect date columns
+            date_columns = df.select_dtypes(include=['datetime64[ns]', 'datetime64[ns, UTC]']).columns
+            
+            # Define a date format
+            date_format = workbook.add_format({'num_format': 'mm/dd/yyyy'})
+            
+            # Apply the date format to each detected date column
+            for column in date_columns:
+                col_idx = df.columns.get_loc(column)
+                # Set column width and apply date format; adjust width as needed
+                worksheet.set_column(col_idx, col_idx, 15, date_format)
+        
+        print(f"DataFrame successfully saved to {file_path} with date formats preserved.")
+    except Exception as e:
+        logger.error(f"Error saving DataFrame to Excel: {e}")
+        raise
 
