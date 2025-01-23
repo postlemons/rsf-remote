@@ -2,7 +2,7 @@
   "name": "duplicate-checker",
   "version": "1.0.0",
   "description": "A minimal and sleek data processing application to filter duplicates from a a desired sheet",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "start": "npm install && node api/index.js"
   },
