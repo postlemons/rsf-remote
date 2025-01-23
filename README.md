@@ -1,64 +1,60 @@
-# RSF Remote
+# Duplicate Checker - Express Version
+The code has been re-written in JS
 
-RSF Remote is a remote filtering software for Excel sheets.
+## Getting Started
 
-## Features
+### Prerequisites
 
-- Filter Excel sheets remotely
-- User-friendly interface
-- Supports various filtering options
+- Node.js
+- npm (Node Package Manager)
+- Google API Token [Service account]
 
-## Installation
+### Installation
 
-To install the necessary dependencies, run:
+1. Clone the repository:
+    ```sh
+    git clone https://github.com/postlemons/rsf-remote.git
+    cd rsf-remote/express-version
+    ```
 
-```bash
-pip install -r requirements.txt
+2. Install the dependencies:
+    ```sh
+    npm install
+    ```
+
+### Configuration
+
+To use the Google API, you need to obtain a token from the Google Console:
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/).
+2. Create a new project or select an existing one.
+3. Navigate to the "APIs & Services" section and enable the necessary APIs (e.g., Google Sheets API).
+4. Create credentials and obtain an OAuth 2.0 Client ID.
+5. Download the credentials JSON file and save it in the `express-version` folder.
+6. Rename the file to `token.json`.
+
+### Running the Application
+
+To start the application, run:
+
+```sh
+npm start
 ```
 
 ## Usage
 
-To start the application, run:
-
-```bash
-python main.py
-```
+Provide instructions on how to use the application.
 
 ## Contributing
 
-Contributions are welcome! Please open an issue or submit a pull request.
+If you would like to contribute to this project, please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-For any inquiries or issues, please contact [postlemons](https://github.com/postlemons).
-
-
-### LICENSE
-
-```plaintext
-MIT License
-
-Copyright (c) 2025 postlemons
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+This project is licensed under the MIT License
