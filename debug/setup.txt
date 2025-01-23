@@ -1,1 +1,0 @@
-> pip install Flask XlsxWriter pandas openpyxl gspread google-auth oauth2client google
