@@ -4,13 +4,13 @@ const path = require('path');
 const fs = require('fs');
 const helmet = require('helmet');
 const compression = require('compression');
-const { processFiles } = require('./api/processFiles');
+const { processFiles } = require('./processFiles');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
+app.use('/images', express.static(path.join(__dirname, '../public/images')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
@@ -41,7 +41,7 @@ app.post('/process', upload.fields([{ name: 'localFile' }, { name: 'token' }]), 
 
     // Schedule deletion of converted file after 10 minutes
     setTimeout(() => {
-      const resultFilePath = path.join(__dirname, 'downloads', result.fileUrl);
+      const resultFilePath = path.join(__dirname, '../downloads', result.fileUrl);
       fs.unlink(resultFilePath, (err) => {
         if (err) console.error(`Failed to delete ${resultFilePath}:`, err);
       });
@@ -54,7 +54,7 @@ app.post('/process', upload.fields([{ name: 'localFile' }, { name: 'token' }]), 
 });
 
 app.get('/downloads/:filename', (req, res) => {
-  const filePath = path.join(__dirname, 'downloads', req.params.filename);
+  const filePath = path.join(__dirname, '../downloads', req.params.filename);
   res.download(filePath, (err) => {
     if (err) {
       res.status(404).send('File not found');

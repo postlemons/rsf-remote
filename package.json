@@ -4,7 +4,7 @@
   "description": "A minimal and sleek data processing application to filter duplicates from a a desired sheet",
   "main": "server.js",
   "scripts": {
-    "start": "npm install && node server.js"
+    "start": "npm install && node api/index.js"
   },
   "dependencies": {
     "body-parser": "^1.20.3",
