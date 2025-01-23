@@ -37,7 +37,7 @@ async function processFiles(localFilePath, colName, links, onlineColName, tokenF
     await compare(mainData, output, onlineColName, localFilePath);
 
     const resultFileName = `result_${Date.now()}.xlsx`;
-    const resultPath = path.join(__dirname, 'downloads', resultFileName);
+    const resultPath = path.join(__dirname, '../downloads', resultFileName);
 
     // Ensure the downloads directory exists
     fs.mkdirSync(path.dirname(resultPath), { recursive: true });

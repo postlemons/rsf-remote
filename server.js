@@ -4,12 +4,13 @@ const path = require('path');
 const fs = require('fs');
 const helmet = require('helmet');
 const compression = require('compression');
-const { processFiles } = require('./processFiles');
+const { processFiles } = require('./api/processFiles');
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use('/images', express.static(path.join(__dirname, 'public/images')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
@@ -48,7 +49,7 @@ app.post('/process', upload.fields([{ name: 'localFile' }, { name: 'token' }]), 
 
     res.json({ success: true, fileUrl: `/downloads/${result.fileUrl}`, currentTask: result.currentTask, sheetStatus: result.sheetStatus });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ success: false, error: error.stack });
   }
 });
 
