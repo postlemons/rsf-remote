@@ -29,15 +29,14 @@ app.post('/process', upload.fields([{ name: 'localFile' }, { name: 'token' }]), 
   try {
     const result = await processFiles(localFile.path, colName, linksArray, onlineColName, tokenFile.path);
 
-    // Schedule deletion of uploaded files after 10 minutes
-    setTimeout(() => {
+    // deletion of uploaded files after the process completion
+   
       fs.unlink(localFile.path, (err) => {
         if (err) console.error(`Failed to delete ${localFile.path}:`, err);
       });
       fs.unlink(tokenFile.path, (err) => {
         if (err) console.error(`Failed to delete ${tokenFile.path}:`, err);
       });
-    }, 10 * 60 * 1000);
 
     // Schedule deletion of converted file after 10 minutes
     setTimeout(() => {
@@ -47,9 +46,16 @@ app.post('/process', upload.fields([{ name: 'localFile' }, { name: 'token' }]), 
       });
     }, 10 * 60 * 1000);
 
-    res.json({ success: true, fileUrl: `/downloads/${result.fileUrl}`, currentTask: result.currentTask, sheetStatus: result.sheetStatus });
+    res.json({ success: true, fileUrl: `/downloads/${result.fileUrl}`, stats: result.stats, sheetStatus: result.sheetStatus });
   } catch (error) {
-    res.status(500).json({ success: false, error: error.stack });
+    res.status(500).json({ success: false, error: error.message, stack: error.stack });
+    console.log(error.stack);
+    fs.unlink(localFile.path, (err) => {
+      if (err) console.error(`Failed to delete ${localFile.path}:`, err);
+    });
+    fs.unlink(tokenFile.path, (err) => {
+      if (err) console.error(`Failed to delete ${tokenFile.path}:`, err);
+    });
   }
 });
 

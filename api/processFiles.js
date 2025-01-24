@@ -1,17 +1,33 @@
 const fs = require('fs');
 const path = require('path');
-const XLSX = require('xlsx');
 const localFetch = require('./functions/localFetch').default;
 const onlineFetch = require('./functions/onlineFetch').default;
 const compare = require('./functions/compare');
+const { AppError, FileFormatError, ColumnNotFoundError } = require('./utils/error');
 
 async function processFiles(localFilePath, colName, links, onlineColName, tokenFilePath) {
-  let currentTask = 'Fetching local file data';
+  let currentTask = 'Validating file format';
   let sheetStatus = [];
 
   try {
+    const buffer = fs.readFileSync(localFilePath);
+    const excelMagicNumber = buffer.toString('hex').slice(0, 8);
+
+    const isXLSX = excelMagicNumber === '504b0304'; // XLSX magic number
+    const isXLS = excelMagicNumber === 'd0cf11e0'; // XLS magic number
+
+    if (!isXLSX && !isXLS) {
+      throw new FileFormatError('Invalid file format. Please upload an Excel file (.xlsx or .xls)');
+    }
+    if (!fs.existsSync(localFilePath)) {
+      throw new AppError('File not found, did it upload correctly?', 404);
+    }
+    currentTask = 'Fetching local file data';
     const mainData = await localFetch(localFilePath, colName);
 
+    if (!mainData || mainData.length === 0) {
+      throw new ColumnNotFoundError(`Column "${colName}" not found in local file`);
+    }
     currentTask = 'Extracting sheet IDs from links';
     // Regular expression to extract sheet ID from Google Sheets URL
     const sheetIdRegex = /\/d\/([a-zA-Z0-9-_]+)/;
@@ -25,6 +41,10 @@ async function processFiles(localFilePath, colName, links, onlineColName, tokenF
     currentTask = 'Fetching online sheets data';
     const output = await onlineFetch(tokenFilePath, sheetIds);
 
+    if (!output || output.length === 0) {
+      throw new AppError('No data retrieved from online sheets', 404);
+    }
+
     output.forEach((response, index) => {
       if (response[0] === 200) {
         sheetStatus.push({ message: `Sheet ${index + 1}: Accepted`, accepted: true });
@@ -34,7 +54,7 @@ async function processFiles(localFilePath, colName, links, onlineColName, tokenF
     });
 
     currentTask = 'Comparing data';
-    await compare(mainData, output, onlineColName, localFilePath);
+    const stats = await compare(mainData, output, onlineColName, localFilePath);
 
     const resultFileName = `result_${Date.now()}.xlsx`;
     const resultPath = path.join(__dirname, '../downloads', resultFileName);
@@ -44,10 +64,13 @@ async function processFiles(localFilePath, colName, links, onlineColName, tokenF
 
     // Save the result file
     fs.writeFileSync(resultPath, fs.readFileSync('FilteredFile.xlsx'));
-
-    return { fileUrl: resultFileName, currentTask, sheetStatus };
+    
+    return { fileUrl: resultFileName, sheetStatus, stats: stats};
   } catch (error) {
-    throw new Error(`Error during processing: ${error.message}`);
+    if (error instanceof AppError) {
+      throw error;
+    }
+    throw new AppError(`Error during ${currentTask}: ${error.message}`, 500);
   }
 }
 
