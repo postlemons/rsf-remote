@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   background-color: #f0f2f5;
   display: flex;
   justify-content: center;
@@ -20,9 +20,6 @@ body.dark-mode {
 }
 
 .dark-mode-toggle {
-  position: absolute;
-  top: 20px;
-  right: 20px;
   background: none;
   border: none;
   cursor: pointer;
@@ -80,7 +77,8 @@ body.dark-mode h1 {
   color: #ffffff;
 }
 
-.form-section, .result-section {
+.form-section,
+.result-section {
   flex: 1;
   margin: 0 20px;
 }
@@ -88,13 +86,6 @@ body.dark-mode h1 {
 .form-group {
   margin-bottom: 20px;
   text-align: left;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
-  color: #555;
 }
 
 body.dark-mode label {
@@ -171,13 +162,13 @@ button:hover {
 }
 
 #sheetStatus li.accepted::before {
-  content: '✔️';
+  content: "✔️";
   margin-right: 10px;
   color: green;
 }
 
 #sheetStatus li.rejected::before {
-  content: '❌';
+  content: "❌";
   margin-right: 10px;
   color: red;
 }
@@ -269,7 +260,7 @@ footer a:hover {
   padding: 1rem;
   border-radius: 8px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .stat-number {
@@ -292,7 +283,8 @@ footer a:hover {
     align-items: center;
   }
 
-  .form-section, .result-section {
+  .form-section,
+  .result-section {
     margin: 20px 0;
   }
 
@@ -305,4 +297,51 @@ footer a:hover {
     flex: 0 1 120px;
     padding: 0.8rem;
   }
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: #555;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: calc(100% - 20px);
+  padding: 12px;
+  margin: 5px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #ffffff;
+  color: #000000;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.top-right-buttons {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.logout-form {
+  margin: 0;
+}
+
+.logout-button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #0056b3;
 }

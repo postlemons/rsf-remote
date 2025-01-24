@@ -8,11 +8,17 @@
   <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   <meta name="description" content="A minimal and sleek data processing application" />
   <meta name="theme-color" content="#007bff" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
-  <button id="dark-mode-toggle" class="dark-mode-toggle">
-    <img src="/dark-mode-icon.svg" alt="Toggle Dark Mode" />
-  </button>
+  <div class="top-right-buttons">
+    <button id="dark-mode-toggle" class="dark-mode-toggle">
+      <img src="/dark-mode-icon.svg" alt="Toggle Dark Mode" />
+    </button>
+    <form action="/logout" method="POST" class="logout-form">
+      <button type="submit" class="logout-button">Logout</button>
+    </form>
+  </div>
   <div class="container">
     <div class="form-section">
       <h1>Duplicate Checker</h1>
@@ -49,11 +55,11 @@
         </div>
         <div class="stats-container">
           <div class="hidden" id="stats">
-          <div class="stat-box">
-            <span class="stat-number" id="duplicatesRemoved">0</span>
-            <span class="stat-label">Duplicates Removed</span>
+            <div class="stat-box">
+              <span class="stat-number" id="duplicatesRemoved">0</span>
+              <span class="stat-label">Duplicates Removed</span>
+            </div>
           </div>
-        </div>
         </div>
         <a id="downloadLink" class="hidden" href="#" download>Download File</a>
         <p id="autodel" class="hidden">
